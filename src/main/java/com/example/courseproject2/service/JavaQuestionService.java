@@ -1,18 +1,20 @@
 package com.example.courseproject2.service;
 
 import com.example.courseproject2.exceptions.NotEnoughQuestionsException;
+import com.example.courseproject2.exceptions.NotFoundQuestionsException;
 import com.example.courseproject2.model.Question;
 import com.example.courseproject2.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-@Service
+@Service("java")
 public class JavaQuestionService implements QuestionService {
 
     private final QuestionRepository repository;
     private final Random random = new Random();
 
-    public JavaQuestionService(QuestionRepository repository) {
+    public JavaQuestionService(@Qualifier("javaRepository") QuestionRepository repository) {
         this.repository = repository;
     }
 
@@ -41,6 +43,9 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question getRandomQuestion() {
         var questions = repository.getAll();
+        if (questions.isEmpty()) {
+            throw new NotFoundQuestionsException();
+        }
         var index = random.nextInt(questions.size());
         var i = 0;
         for (Question question : questions) {
@@ -49,7 +54,7 @@ public class JavaQuestionService implements QuestionService {
             }
             i++;
         }
-        throw new NotEnoughQuestionsException();
+        throw new NotFoundQuestionsException();
     }
 
 

@@ -3,16 +3,18 @@ package com.example.courseproject2.service;
 import com.example.courseproject2.exceptions.NotEnoughQuestionsException;
 import com.example.courseproject2.model.Question;
 import com.example.courseproject2.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Random;
-@Service
-public class MathQuestionService implements  QuestionService {
+
+@Service("math")
+public class MathQuestionService implements QuestionService {
     private final QuestionRepository repository;
     private final Random random = new Random();
 
-    public MathQuestionService(QuestionRepository repository) {
+    public MathQuestionService(@Qualifier("mathRepository")QuestionRepository repository) {
         this.repository = repository;
     }
 
@@ -24,18 +26,18 @@ public class MathQuestionService implements  QuestionService {
 
     @Override
     public Question add(Question question) {
-        return repository.add(question) ;
+        return repository.add(question);
     }
 
     @Override
     public Question remove(Question question) {
-        return repository.remove(question) ;
+        return repository.remove(question);
 
     }
 
     @Override
     public Collection<Question> getAll() {
-        return repository.getAll() ;
+        return repository.getAll();
     }
 
     @Override

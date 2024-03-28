@@ -2,6 +2,7 @@ package com.example.courseproject2.controller;
 
 import com.example.courseproject2.model.Question;
 import com.example.courseproject2.service.QuestionService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import java.util.Collection;
 public class JavaQuestionController {
     private final QuestionService service;
 
-    public JavaQuestionController(QuestionService service) {
+    public JavaQuestionController(@Qualifier("java") QuestionService service) {
         this.service = service;
     }
 
